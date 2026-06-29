@@ -1,0 +1,138 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Item Display</title>
+
+    <script src="item-list.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .main-container {
+            width: 1000px;
+            margin: 30px 50px;
+        }
+
+        h2 {
+            font-size: 48px;
+            margin-bottom: 30px;
+        }
+
+        .select {
+            width: 360px;
+            height: 45px;
+            font-size: 22px;
+            margin-bottom: 20px;
+        }
+
+        hr {
+            margin-bottom: 20px;
+        }
+
+        .prop-row {
+            display: grid;
+            grid-template-columns: 250px 300px;
+            margin: 15px 0;
+            font-size: 24px;
+        }
+
+        .prop-name {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="main-container">
+
+    <h2>Item Display</h2>
+
+    <select id="item-list" class="select"></select>
+
+    <hr>
+
+    <div class="prop-row">
+        <div class="prop-name">ID</div>
+        <div id="item-id"></div>
+    </div>
+
+    <div class="prop-row">
+        <div class="prop-name">Name</div>
+        <div id="item-name"></div>
+    </div>
+
+    <div class="prop-row">
+        <div class="prop-name">Category</div>
+        <div id="item-category"></div>
+    </div>
+
+    <div class="prop-row">
+        <div class="prop-name">Inventory Amt.</div>
+        <div id="item-inventory"></div>
+    </div>
+
+    <div class="prop-row">
+        <div class="prop-name">List Price</div>
+        <div id="item-price"></div>
+    </div>
+
+</div>
+
+<script>
+window.onload = function () {
+
+    const select = document.getElementById("item-list");
+
+    // Blank option
+    const blankOption = document.createElement("option");
+    blankOption.value = "";
+    blankOption.textContent = "";
+    select.appendChild(blankOption);
+
+    // Create dropdown options
+    items.forEach(function(item) {
+        const option = document.createElement("option");
+        option.value = item.id;
+        option.textContent = item.name;
+        select.appendChild(option);
+    });
+
+    // Clear all fields
+    function clearData() {
+        document.getElementById("item-id").textContent = "";
+        document.getElementById("item-name").textContent = "";
+        document.getElementById("item-category").textContent = "";
+        document.getElementById("item-inventory").textContent = "";
+        document.getElementById("item-price").textContent = "";
+    }
+
+    clearData();
+
+    // Display selected item
+    select.addEventListener("change", function () {
+
+        if (this.value === "") {
+            clearData();
+            return;
+        }
+
+        const selectedItem = items.find(function(item) {
+            return item.id == select.value;
+        });
+
+        document.getElementById("item-id").textContent = selectedItem.id;
+        document.getElementById("item-name").textContent = selectedItem.name;
+        document.getElementById("item-category").textContent = selectedItem.category;
+        document.getElementById("item-inventory").textContent = selectedItem.inventory;
+        document.getElementById("item-price").textContent = selectedItem.price;
+    });
+
+};
+</script>
+
+</body>
+</html>
